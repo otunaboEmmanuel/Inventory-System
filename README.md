@@ -26,7 +26,7 @@ The **Inventory System** is a robust solution designed to manage and track inven
 The project is built using the following technologies:
 
 - **Backend**: [NestJS](https://nestjs.com/) - A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
-- **Frontend**: [Vue.js](https://vuejs.org/) - A modern JavaScript framework for building user interfaces.
+- **Frontend**: [React.js](https://vite.dev/) - A modern JavaScript framework for building user interfaces.
 - **Database**: [SQL](https://www.postgresql.org/) - A powerful, open-source relational database management system.
 
 ---
@@ -51,7 +51,7 @@ Ensure you have the following tools installed:
 
 - [Node.js](https://nodejs.org/en/) (v14.x or higher)
 - [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
-- [Vue CLI](https://cli.vuejs.org/)
+- [React.js](https://vite.dev/)
 - [PostgreSQL](https://www.postgresql.org/) (or any SQL database)
 
 ### Installation
@@ -109,20 +109,20 @@ Ensure you have the following tools installed:
 
 2. The backend should now be running on `http://localhost:3000`.
 
-### Frontend (Vue.js)
+### Frontend (React.js)
 
-1. **Start the Vue.js client**:
+1. **Start the React.js client**:
 
    ```bash
    cd client
-   npm run serve
+   npm run dev
    ```
 
-2. The frontend should now be running on `http://localhost:8080`.
+2. The frontend should now be running on `http://localhost:5173`.
 
 ### Access the Application
 
-- **Frontend**: Open `http://localhost:8080` in your browser to access the client-side of the application.
+- **Frontend**: Open `http://localhost:5173` in your browser to access the client-side of the application.
 - **Backend API**: The API is accessible at `http://localhost:3000/api`.
 
 ---
@@ -136,7 +136,7 @@ Inventory-System/
 │   ├── src/            # Source files for backend
 │   └── ...             # Other backend-specific folders and files
 │
-├── client/             # Vue.js frontend code
+├── client/             # React.js frontend code
 │   ├── src/            # Source files for frontend
 │   └── ...             # Other frontend-specific folders and files
 │
