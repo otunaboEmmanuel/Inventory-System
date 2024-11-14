@@ -41,7 +41,7 @@ const Sidebar = () => {
         { name: "Sales", icon: <TrendingUpIcon />, link: "/sales" },
         { name: "Service", icon: <ShoppingCartIcon />, link: "/service" },
         { name: "Sales Report", icon: <EmailIcon />, link: "/reports" },
-        { name: "Store Management", icon: <ManageAccountsIcon />, link: "/management" }
+        { name: "User Management", icon: <ManageAccountsIcon />, link: "/management" }
     ];
 
     const profileItems = [
@@ -52,11 +52,11 @@ const Sidebar = () => {
 
     return (
         <div className="fixed flex flex-col w-64 min-h-screen bg-white items-center">
-            <div className="flex flex-row w-full justify-center items-center md:mt-4 mt-16">
+            <div className="flex flex-row w-full justify-center items-center mt-16">
                 <img src={Logo} alt="header-logo" className="w-1/4" />
                 <h3 className="text-[black]  items-center text-2xl">InventoryHUB</h3>
             </div>
-            <ul className='mt-8 md:mt-2'>
+            <ul className='mt-8'>
                 {navItems.map((item) => (
                     <li key={item.name} className="flex items-center py-2 px-4 hover:bg-gray-200 rounded-lg">
                         <Link to={item.link} className="flex items-center w-full">
@@ -66,7 +66,7 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
-            <div className="log-out fixed bottom-16 md:bottom-8">
+            <div className="log-out fixed bottom-16">
                 <ul className='mt-8'>
                     {profileItems.map((item) => (
                         <li key={item.name} className="flex items-start py-2 px-4 hover:bg-gray-200 rounded-lg">
