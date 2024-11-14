@@ -7,9 +7,13 @@ import { OrderModule } from './order/order.module';
 import { OrderItemModule } from './order-item/order-item.module';
 import { CustomerModule } from './customer/customer.module';
 import { UserModule } from './user/user.module';
+import { DatabaseModule } from 'database/database.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
     ProductModule,
     StockLogModule,
     CategoryModule,

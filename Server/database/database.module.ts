@@ -8,6 +8,7 @@ import { OrderItem } from 'src/order-item/entities/order-item.entity';
 import { Supplier } from 'src/supplier/entities/supplier.entity';
 import { StockLog } from 'src/stock-log/entities/stock-log.entity';
 import { Category } from 'src/category/entities/category.entity';
+import { User } from 'src/user/user.entity';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { Category } from 'src/category/entities/category.entity';
           Supplier,
           StockLog,
           Category,
+          User,
         ],
         synchronize: true,
       }),
