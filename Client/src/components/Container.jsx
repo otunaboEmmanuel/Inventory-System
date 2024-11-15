@@ -1,7 +1,9 @@
-import React from 'react';
-// Assuming you want to use Chart.js for charts
+import React, { useEffect, useState } from 'react';
+// import { Line } from 'react-chartjs-2'; // Uncomment this line when you want to use the chart
 
 const Container = () => {
+  const [totalUsers, setTotalUsers] = useState(0);
+
   // Sample data for the chart
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -18,6 +20,26 @@ const Container = () => {
     ],
   };
 
+  const getUsers = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/v1/users", {
+        method: "GET",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setTotalUsers(data.length);
+      } else {
+        console.error("Failed to fetch users:", res.statusText);
+      }
+    } catch (error) {
+      console.error("API link not working", error);
+    }
+  };
+
+  useEffect(() => {
+    getUsers(); // Call getUsers when the component mounts
+  }, []);
+
   return (
     <div className="ml-64 w-full bg-[#f4f4f4] p-8">
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
@@ -32,7 +54,7 @@ const Container = () => {
         {/* Card 2: Total Users */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold">Total Users</h2>
-          <p className="text-2xl font-bold">1,234</p>
+          <p className="text-2xl font-bold">{totalUsers}</p> {/* Display total users */}
         </div>
 
         {/* Card 3: Total Orders */}
@@ -45,16 +67,17 @@ const Container = () => {
       {/* Chart Section */}
       <div className="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 className="text-xl font-semibold mb-4">Sales Overview</h2>
+        {/* <Line data={data} /> Uncomment this line when you want to use the chart */}
       </div>
 
       {/* Recent Activity Section */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
         <ul>
-          <li className="border-b py-2">User  John Doe made a purchase of $100.</li>
-          <li className="border-b py-2">User  Jane Smith registered.</li>
-          <li className="border-b py-2">User  Alex Johnson updated their profile.</li>
-          <li className="border-b py-2">User  Emily Davis made a purchase of $50.</li>
+          <li className="border-b py-2">User   John Doe made a purchase of $100.</li>
+          <li className="border-b py-2">User   Jane Smith registered.</li>
+          <li className="border-b py-2">User   Alex Johnson updated their profile.</li>
+          <li className="border-b py-2">User   Emily Davis made a purchase of $50.</li>
         </ul>
       </div>
     </div>

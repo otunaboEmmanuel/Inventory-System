@@ -1,39 +1,79 @@
-// user.service.ts
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
 import { User } from './user.entity';
-import { userRole } from 'enum/role.enum';
+import { userRole } from '../../enum/role.enum';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    @InjectRepository(User) private readonly usersRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { username } });
-  }
-
-  async validatePassword(password: string, hash: string): Promise<boolean> {
-    return bcrypt.compare(password, hash);
-  }
-
-  async createUser(
+  // Register a new user
+  async register(
+    email: string,
     username: string,
     password: string,
-    email: string,
     role: userRole,
   ): Promise<User> {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = this.usersRepository.create({
+
+    const newUser = this.usersRepository.create({
+      email,
       username,
       password: hashedPassword,
-      email,
-      role, // Directly assign role of type UserRole
+      role,
     });
-    return this.usersRepository.save(user);
+
+    return this.usersRepository.save(newUser);
+  }
+
+  // Minimal login feature with email and password validation
+  async login(email: string, password: string): Promise<{ message: string }> {
+    const user = await this.usersRepository.findOne({ where: { email } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const passwordMatches = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatches) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    return { message: 'Login successful' };
+  }
+  // Return all users (admin only)
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
+
+  // Get a single user by ID
+  async findOneById(id: number): Promise<User> {
+    const user = await this.usersRepository.findOne({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
+  }
+
+  // Delete a user by ID (admin only)
+  async deleteUser(id: number): Promise<void> {
+    const result = await this.usersRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException('User not found');
+    }
   }
 }

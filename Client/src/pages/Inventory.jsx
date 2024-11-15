@@ -1,22 +1,3 @@
-// import React from 'react'
-// import SidebarWithRoleControl from '../components/SidebarWithRoleControl'; // Import the SidebarWithRoleControl
-// import Container from '../components/Container';
-// import { AuthProvider } from '../components/Auth';
-// const Inventory = () => {
-//     return (
-//         <AuthProvider>
-//             <div className="home-page flex flex-row w-full min-h-screen">
-//                 <SidebarWithRoleControl /> {/* Use SidebarWithRoleControl instead of Sidebar */}
-//                 <div className="ml-64 w-full bg-[#f4f4f4]">
-//                     Inventory
-//                 </div>
-//             </div>
-//         </AuthProvider>
-//     )
-// }
-
-// export default Inventory
-
 import React, { useState } from 'react';
 import SidebarWithRoleControl from '../components/SidebarWithRoleControl'; // Import the SidebarWithRoleControl
 import { AuthProvider } from '../components/Auth';
@@ -30,6 +11,9 @@ const Inventory = () => {
         { id: 4, model: 'OnePlus 9', price: 729, quantity: 3 },
     ]);
 
+    // State for new phone input
+    const [newPhone, setNewPhone] = useState({ model: '', price: '', quantity: '' });
+
     const handleAddStock = (id) => {
         setInventory(inventory.map(item =>
             item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -42,12 +26,78 @@ const Inventory = () => {
         ));
     };
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewPhone({ ...newPhone, [name]: value });
+    };
+
+    const handleAddPhone = (e) => {
+        e.preventDefault();
+        const newId = inventory.length ? inventory[inventory.length - 1].id + 1 : 1; // Generate new ID
+        const newItem = {
+            id: newId,
+            model: newPhone.model,
+            price: parseFloat(newPhone.price),
+            quantity: parseInt(newPhone.quantity),
+        };
+        setInventory([...inventory, newItem]);
+        setNewPhone({ model: '', price: '', quantity: '' }); // Reset the form
+    };
+
     return (
         <AuthProvider>
             <div className="home-page flex flex-row w-full min-h-screen">
                 <SidebarWithRoleControl />
                 <div className="ml-64 w-full bg-[#f4f4f4] p-8">
                     <h1 className="text-3xl font-bold mb-6">Inventory</h1>
+
+                    {/* Add New Phone Card */}
+                    <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h2 className="text-xl font-semibold mb-4">Add New Phone</h2>
+                        <form onSubmit={handleAddPhone}>
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Model</label>
+                                <input
+                                    type="text"
+                                    name="model"
+                                    value={newPhone.model}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="border rounded-md w-full p-2"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Price</label>
+                                <input
+                                    type="number"
+                                    name="price"
+                                    value={newPhone.price}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="border rounded-md w-full p-2"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Quantity</label>
+                                <input
+                                    type="number"
+                                    name="quantity"
+                                    value={newPhone.quantity}
+                                    onChange={handleInputChange}
+                                    required
+                                    className="border rounded-md w-full p-2"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                            >
+                                Add Phone
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Inventory Table */}
                     <div className="bg-white p-6 rounded-lg shadow-md">
                         <table className="min-w-full">
                             <thead>
