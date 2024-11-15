@@ -46,7 +46,7 @@ const Profile = () => {
       <div className="home-page flex flex-row w-full min-h-screen">
         <SidebarWithRoleControl />
         <div className="ml-64 w-full bg-[#f4f4f4] p-8">
-          <h1 className="text-3xl font-bold mb-6">Profile</h1>
+          
           
           <div className="bg-white p-6 rounded-lg shadow-md mb-6">
             <h2 className="text-2xl font-semibold mb-4">User  Information</h2>
