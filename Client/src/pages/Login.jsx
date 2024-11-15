@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import Logo from "../assets/inventory-logo.svg";
 import PersonIcon from '@mui/icons-material/Person';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { TextField, InputAdornment, FormControl, InputLabel, OutlinedInput, IconButton, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { TextField, InputAdornment, FormControl, OutlinedInput, IconButton, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import "../styles/main.css";
 
 const Login = () => {
@@ -13,6 +14,9 @@ const Login = () => {
     const [open, setOpen] = useState(false); // State for modal
     const [registerEmail, setRegisterEmail] = useState("");
     const [registerPassword, setRegisterPassword] = useState("");
+    const [registerUsername, setRegisterUsername] = useState("");
+    const [registerRole, setRegisterRole] = useState("");
+    const navigate = useNavigate();
 
     const navItems = ["Home", "About", "Contact"];
 
@@ -26,7 +30,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://localhost:9001/project/login", {
+            const res = await fetch("http://localhost:3000/api/v1/users/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,6 +41,7 @@ const Login = () => {
             if (res.ok) {
                 const data = await res.json();
                 console.log(data);
+                navigate("/dashboard"); // Navigate to /dashboard on successful login
             } else {
                 console.error("Login failed:", res.statusText);
             }
@@ -45,16 +50,17 @@ const Login = () => {
         }
     };
 
+
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://localhost:9001/project/register", {
+            const res = await fetch("http://localhost:3000/api/v1/users/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: registerEmail, password: registerPassword }),
+                body: JSON.stringify({ username: registerUsername, email: registerEmail, password: registerPassword, role: registerRole }),
             });
 
             if (res.ok) {
@@ -157,9 +163,22 @@ const Login = () => {
                     <form onSubmit={handleRegisterSubmit} className="flex flex-col gap-4">
                         <TextField
                             fullWidth
+                            type="email"
                             variant="outlined"
                             placeholder="Email"
                             onChange={(event) => setRegisterEmail(event.target.value)}
+                        />
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            placeholder="Username"
+                            onChange={(event) => setRegisterUsername(event.target.value)}
+                        />
+                        <TextField
+                            fullWidth
+                            variant="outlined"
+                            placeholder="Role"
+                            onChange={(event) => setRegisterRole(event.target.value)}
                         />
                         <FormControl variant="outlined" fullWidth>
                             <OutlinedInput

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from "../assets/inventory-logo.svg";
@@ -17,24 +19,24 @@ import SalesSidebar from './sidebars/SalesSidebar';
 // Role-Based Access Control (Optional)
 const SidebarWithRoleControl = () => {
     const { user } = useAuth();
-  
+
     const renderSidebarBasedOnRole = () => {
-      switch(user.role) {
-        case 'Admin':
-          return <Sidebar/>;
-        case 'Sales Staff':
-          return <SalesSidebar />;
-        case 'Manager':
-          return <ManagerSidebar />;
-      }
+        switch (user.role) {
+            case 'Admin':
+                return <Sidebar />;
+            case 'Sales Staff':
+                return <SalesSidebar />;
+            case 'Manager':
+                return <ManagerSidebar />;
+        }
     };
-  
+
     return renderSidebarBasedOnRole();
-  };
+};
 
 const Sidebar = () => {
-    
-    
+
+
     const navItems = [
         { name: "Dashboard", icon: <HomeIcon />, link: "/dashboard" },
         { name: "Inventory", icon: <CategoryIcon />, link: "/inventory" },
@@ -66,7 +68,7 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
-            <div className="log-out fixed bottom-16">
+            <div className="log-out fixed bottom-16 ">
                 <ul className='mt-8'>
                     {profileItems.map((item) => (
                         <li key={item.name} className="flex items-start py-2 px-4 hover:bg-gray-200 rounded-lg">
