@@ -14,8 +14,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [open, setOpen] = useState(false); // State for registration modal
-    const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false); 
-    
+    const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
+
     const navigate = useNavigate();
 
     const navItems = ["Home", "About", "Contact"];
@@ -49,7 +49,7 @@ const Login = () => {
             console.error("API link not working", error);
         }
     };
-   
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -97,8 +97,8 @@ const Login = () => {
                             variant="outlined"
                             placeholder="Email"
                             onChange={(event) => setEmail(event.target.value)}
-                            InputProps={{
-                                inputAdornment: {
+                            slotProps={{
+                                input: {
                                     startAdornment: (
                                         <InputAdornment position="start">
                                             <PersonIcon />
