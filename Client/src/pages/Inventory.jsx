@@ -48,7 +48,7 @@ const Inventory = () => {
         <AuthProvider>
             <div className="home-page flex flex-row w-full min-h-screen">
                 <SidebarWithRoleControl />
-                <div className="ml-64 w-full bg-[#f4f4f4] p-8">
+                <div className="ml-0 w-full bg-[#f4f4f4] p-8 sm:ml-64">
                     <h1 className="text-3xl font-bold mb-6">Inventory</h1>
 
                     {/* Add New Phone Card */}
