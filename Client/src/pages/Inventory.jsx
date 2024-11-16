@@ -118,7 +118,7 @@ const Inventory = ({ sidebarOpen, toggleSidebar }) => {
                                         <td className="py-2 px-1 sm:px-4">${item.price}</td>
                                         <td className="py-2 px-1 sm:px-4">{item.quantity}</td>
                                         <td className="py-2 px-1 sm:px-4">
-                                            <div className='flex flex-col gap-2 '>
+                                            <div className='flex sm:flex-row flex-col gap-2 '>
                                                 <button
                                                     onClick={() => handleAddStock(item.id)}
                                                     className="bg-green-500 text-white px-2 py-1 rounded-md mr-1 sm:mr-2"
